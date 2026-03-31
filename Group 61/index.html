@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYAANIFY | Simplifying Learning</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+     <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="app.navigate('home')">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    GYAANIFY
+                </div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a onclick="app.navigate('home')" id="nav-home" class="active-link">Home</a></li>
+                    <li><a onclick="app.navigate('classes')" id="nav-classes">Classes</a></li>
+                    <!-- <li><a onclick="app.navigate('resources')" id="nav-resources">Resources</a></li> -->
+                    <li><a href="#footer">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        
+        <!-- View: Home -->
+        <section id="view-home" class="view-section active">
+            <div class="container">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Simplifying <span>Learning</span> for Everyone.</h1>
+                        <p class="hero-subtitle">Access highly organized study materials, PYQs, notes, and resources for Classes 8 to 12. Build your foundation and excel in your exams.</p>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-start;">
+                            <button class="btn btn-primary" onclick="app.navigate('classes')">Start Learning</button>
+                            <button class="btn btn-outline" onclick="app.navigate('resources')">Browse Resources</button>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <!-- Image use in hero section -->
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students Learning Online" style="border-radius: 20px;">
+                    </div>
+                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <i class="fa-solid fa-graduation-cap"></i> GYAANIFY
+                    </div>
+                    <p>Your one-stop destination for structured, high-quality, and accessible study materials. Simplifying learning for students nationwide.</p>
+                    <br>
+                    <h3><p>Developed by the Team Members of Group No. 61 </p></h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="app.navigate('home')">Home</a></li>
+                        <li><a onclick="app.navigate('classes')">Classes</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Copyright Information</a></li>
+                    </ul>
+                </div>
+
+    
+</body>
+</html>
