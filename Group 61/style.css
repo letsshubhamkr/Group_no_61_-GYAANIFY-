@@ -255,3 +255,7 @@
             font-size: 0.9rem;
         }
 
+        .nav-links li {
+    display: flex;
+    align-items: center;
+}
