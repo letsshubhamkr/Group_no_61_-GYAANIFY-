@@ -22,7 +22,17 @@
                 
                 <ul class="nav-links" id="nav-links">
     <li><a onclick="app.navigate('home')" id="nav-home" class="active-link">Home</a></li>
-    <li><a onclick="app.navigate('classes')" id="nav-classes">Classes</a></li>
+    <li class="dropdown">
+    <a id="nav-classes">Classes</a>
+
+    <!-- Dropdown -->
+    <div class="dropdown-menu" id="classDropdown">
+    <a href="#" class="class-btn">Class 9</a>
+    <a href="#" class="class-btn">Class 10</a>
+    <a href="#" class="class-btn">Class 11</a>
+    <a href="#" class="class-btn">Class 12</a>
+</div>
+</li>
     <li><a href="#footer">Contact</a></li>
 
     <!-- SIGN UP BUTTON INLINE -->
@@ -97,7 +107,7 @@
                         <li><a href="#">Copyright Information</a></li>
                     </ul>
                 </div>
-
+<script src="script.js"></script>
     
 </body>
 </html>
