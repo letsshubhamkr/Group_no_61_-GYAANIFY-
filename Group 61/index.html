@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GYAANIFY | Simplifying Learning</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome for Icons -->
+    
+     <!-- EXTERNAL LIBRARIES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--Linking CSS Page -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
      <!-- Header & Navigation -->
@@ -22,26 +23,16 @@
                 
                 <ul class="nav-links" id="nav-links">
     <li><a onclick="app.navigate('home')" id="nav-home" class="active-link">Home</a></li>
-    <li class="dropdown">
-    <a id="nav-classes">Classes</a>
-
-    <!-- Dropdown -->
-    <div class="dropdown-menu" id="classDropdown">
-    <a href="class9.html" class="class-btn">Class 9</a>
-<a href="class10.html" class="class-btn">Class 10</a>
-<a href="class11.html" class="class-btn">Class 11</a>
-<a href="class12.html" class="class-btn">Class 12</a>
-</div>
-</li>
-    <li><a href="#footer">Contact</a></li>
-
-    <!-- SIGN UP BUTTON INLINE -->
-    <li>
-        <button class="btn btn-outline" onclick="window.location.href='login.html'">
-            Sign Up/Login
-        </button>
-    </li>
-</ul>
+     <li><a onclick="app.navigate('classes')" id="nav-classes">Classes</a></li>
+                    <li><a href="#" onclick="app.scrollToContact(); return false;">Contact</a></li>
+                    <li class="auth-container" id="auth-container">
+                        <button class="btn btn-primary" onclick="app.openAuthModal()">Login / Sign Up</button>
+                    </li>
+                </ul>
+                
+                <button class="mobile-menu-btn" onclick="app.toggleMobileMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </nav>
         </div>
     </header>
@@ -55,10 +46,9 @@
                 <div class="hero">
                     <div class="hero-content">
                         <h1 class="hero-title">Simplifying <span>Learning</span> for Everyone.</h1>
-                        <p class="hero-subtitle">Access highly organized study materials, PYQs, notes, and resources for Classes 9 to 12. Build your foundation and excel in your exams.</p>
+                        <p class="hero-subtitle">Access highly organized study materials, PYQs, notes, and resources for Classes 9 to 12. Build your foundation and excel in your exams,also curated by expert educators.</p>
                         <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: flex-start;">
                             <button class="btn btn-primary" onclick="app.navigate('classes')">Start Learning</button>
-                            <button class="btn btn-outline" onclick="app.navigate('resources')">Browse Resources</button>
                         </div>
                     </div>
                     <div class="hero-image">
@@ -67,11 +57,189 @@
                     </div>
                 </div>
 
+                <div style="margin-top: 60px;">
+                    <h2 class="section-title">Why Choose <span>GYAANIFY?</span></h2>
+                    <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                        <div class="card">
+                            <i class="fa-solid fa-layer-group card-icon"></i>
+                            <h3 class="card-title">Organized Material</h3>
+                            <p class="card-desc">Find precisely what you need instantly categorized by Class, Subject, and Topic.</p>
+                        </div>
+                        <div class="card">
+                            <i class="fa-solid fa-cloud-arrow-up card-icon"></i>
+                            <h3 class="card-title">Premium Access</h3>
+                            <p class="card-desc">Login to access exclusive premium study materials, ebooks, and video lectures.</p>
+                        </div>
+                        <div class="card">
+                            <i class="fa-solid fa-clock-rotate-left card-icon"></i>
+                            <h3 class="card-title">Previous Year Qs</h3>
+                            <p class="card-desc">Practice with verified PYQs to understand exam patterns and boost confidence.</p>
+
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+
+        <!-- --- PAGE 2: CLASSES VIEW --- -->
+        <section id="view-classes" class="view-section">
+            <div class="container">
+                <h2 class="section-title">Select Your <span>Class</span></h2>
+                <div class="grid-container" id="classes-container"></div>
+            </div>
+        </section>
+
+        <!-- --- PAGE 3: SUBJECTS VIEW --- -->
+        <section id="view-subjects" class="view-section">
+            <div class="container">
+                <div class="back-btn" onclick="app.navigate('classes')">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Classes
+                </div>
+                <h2 class="section-title" id="subjects-title">Subjects</h2>
+                <div class="grid-container" id="subjects-container"></div>
+            </div>
+        </section>
+
+        <!-- --- PAGE 4: RESOURCES VIEW --- -->
+        <section id="view-resources" class="view-section">
+            <div class="container">
+                <h2 class="section-title">Study <span>Materials</span></h2>
+                
+                <div class="toolbar">
+                    <div class="search-container" style="margin: 0; flex: 1; max-width: 500px;">
+                        <i class="fa-solid fa-search search-icon"></i>
+                        <input type="text" id="resource-search" class="search-input" placeholder="Search topics, subjects..." onkeyup="app.filterResources()">
+                    </div>
+                    <div id="upload-action-container" style="display: none;">
+                        <button class="btn btn-primary" onclick="app.openUploadModal()"><i class="fa-solid fa-plus"></i> Upload Material</button>
+                    </div>
+                </div>
+
+                <div class="grid-container" id="resources-container">
+                    <div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading resources from cloud...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======================= MODALS (POPUPS) ======================= -->
+    
+    <!-- 1. Authentication Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="app.closeAuthModal()"><i class="fa-solid fa-times"></i></button>
+            <h2 class="modal-title">Welcome to GYAANIFY</h2>
+            <p class="modal-subtitle">Login or Sign Up to access premium materials.<br></p>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active-tab" id="tab-login" onclick="app.toggleAuthMode('login')">Login</div>
+                <div class="auth-tab" id="tab-signup" onclick="app.toggleAuthMode('signup')">Sign Up</div>
+            </div>
+
+            <div id="auth-error" class="auth-error"></div>
+
+            <form id="auth-form" onsubmit="app.handleAuthSubmit(event)">
+                
+                <div class="form-group signup-only" style="display: none;">
+                    <label>Student Name</label>
+                    <input type="text" id="auth-name" class="form-control" placeholder="e.g. Shubham Kumar">
+                </div>
+                
+                <div class="form-group signup-only" style="display: none;">
+                    <label>Select Class</label>
+                    <select id="auth-class" class="form-control">
+                        <option value="">-- Choose your class --</option>
+                        <option value="Class 9">Class 9</option>
+                        <option value="Class 10">Class 10</option>
+                        <option value="Class 11">Class 11</option>
+                        <option value="Class 12">Class 12</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="auth-email" class="form-control" placeholder="e.g. shubhamkuma263@gmail.com" required>
+                </div>
+                
+                <div class="form-group signup-only" style="display: none;">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="auth-mobile" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" title="Please enter a valid 10-digit mobile number">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Password</label>
+                    <input type="password" id="auth-password" class="form-control" placeholder="Enter your password" required minlength="6">
+                </div>
+
+                <div class="form-group signup-only" style="display: none; margin-bottom: 30px;">
+                    <label>Confirm Password</label>
+                    <input type="password" id="auth-confirm-password" class="form-control" placeholder="Confirm your password" minlength="6">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;" id="auth-submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Content Management Modal (Admin Only) -->
+    <div class="modal-overlay" id="upload-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="app.closeUploadModal()"><i class="fa-solid fa-times"></i></button>
+            <h2 class="modal-title" id="upload-modal-title">Upload Material</h2>
+            <p class="modal-subtitle">Share study materials and e-books with the community.</p>
+            
+            <form id="upload-form" onsubmit="app.handleUploadSubmit(event)">
+                <input type="hidden" id="edit-resource-id">
+                
+                <div class="form-group">
+                    <label>Title / Topic Name</label>
+                    <input type="text" id="res-title" class="form-control" placeholder="e.g. Thermodynamics Chapter 1" required>
+                </div>
+                <div class="form-group">
+                    <label>Target Class</label>
+                    <select id="res-class" class="form-control" required>
+                        <option value="">Select Class</option>
+                        <option value="Class 9">Class 9</option>
+                        <option value="Class 10">Class 10</option>
+                        <option value="Class 11">Class 11</option>
+                        <option value="Class 12">Class 12</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select id="res-subject" class="form-control" required>
+                        <option value="">Select Subject</option>
+                        <!-- Classes 9 & 10 Subjects -->
+                        <option value="Science">Science</option>
+                        <!-- Classes 11 & 12 Subjects -->
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <!-- Common Subjects -->
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Computer">Computer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Material Type</label>
+                    <select id="res-type" class="form-control" required>
+                        <option value="Notes">Notes (PDF)</option>
+                        <option value="PYQ">Previous Year Qs</option>
+                        <option value="Video Link">Video Lecture Link</option>
+                        <option value="PDF">E-Book / Reference PDF</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label>Resource URL (Drive Link, YouTube, etc.)</label>
+                    <input type="url" id="res-url" class="form-control" placeholder="https://..." required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Save Resource</button>
+            </form>
+        </div>
+    </div>
+
 
     <!-- Footer -->
     <footer id="footer">
@@ -81,53 +249,34 @@
                     <div class="logo" style="margin-bottom: 20px;">
                         <i class="fa-solid fa-graduation-cap"></i> GYAANIFY
                     </div>
-                    <p>Your one-stop destination for structured, high-quality, and accessible study materials. Simplifying learning for students nationwide.</p>
-                    <br>
-                    <h3><p>Developed by the Team Members of Group No. 61 </p></h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
+                    <p>Your one-stop destination for structured, high-quality, and accessible study materials. Simplifying learning for students nationwide.</p> 
                 </div>
-                <div class="footer-col">
+                    <div class="footer-col">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a onclick="app.navigate('home')">Home</a></li>
                         <li><a onclick="app.navigate('classes')">Classes</a></li>
-                        <li><a href="#">About Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Legal</h3>
+                    <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Copyright Information</a></li>
+                        <li><i class="fa-solid fa-envelope" style="margin-right: 8px;"></i> support@gyaanify.com</li>
+                        <li><i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i> Patna, Bihar, India</li>
                     </ul>
                 </div>
-<script src="script.js"></script>
+            </div>
+            <div class="footer-bottom">
+                <div style="margin-bottom: 8px;">&copy; <span id="year"></span> GYAANIFY. All Rights Reserved.</div>
+                <div style="font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px; color: #94a3b8;">
+                    Developed by the Team Members of <span style="color: var(--primary-color);">Group No. 61</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDYyVDILCsh2O2NWlPp9kYQMl27omrVkY8",
-    authDomain: "gyaanify-aa427.firebaseapp.com",
-    projectId: "gyaanify-aa427",
-    storageBucket: "gyaanify-aa427.firebasestorage.app",
-    messagingSenderId: "634472884072",
-    appId: "1:634472884072:web:505d9de259a9662ccd98dd"
-  };
-
-  // Initialize Firebase
-  const firebaseApp = initializeApp(firebaseConfig);
-</script>
+    <script type="module" src="index.js"></script>
     
 </body>
 </html>
