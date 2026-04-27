@@ -40,8 +40,14 @@ const staticData = {
         { id: 'c10', name: 'Class 10', icon: 'fa-award', desc: 'Board exam preparation' },
         { id: 'c11', name: 'Class 11', icon: 'fa-microscope', desc: 'Stream selection & deep dive' },
         { id: 'c12', name: 'Class 12', icon: 'fa-user-graduate', desc: 'Final boards & competitive exams' }
-    ]
-    // Note for Future GitHub update: Add subjects and initialResources arrays back here.
+    ],
+
+    subjects: {
+        c9: ["Science", "Mathematics", "Social Studies"],
+        c10: ["Science", "Mathematics", "Social Studies"],
+        c11: ["Physics", "Chemistry", "Mathematics", "Biology"],
+        c12: ["Physics", "Chemistry", "Mathematics", "Biology"]
+    }
 };
 
 // ==========================================
@@ -310,7 +316,6 @@ window.app = {
     // ==========================================
     // 6. RENDERING & UI UPDATES
     // ==========================================
-
     // Render Classes Grid
     renderClasses: function() {
         const container = document.getElementById('classes-container');
@@ -342,6 +347,38 @@ window.app = {
             container.appendChild(card);
         });
     },
+    renderSubjects: function(classId) {
+    const container = document.getElementById('subjects-container');
+    const title = document.getElementById('subjects-title');
+
+    if (!container) return;
+
+    // Clear previous data
+    container.innerHTML = '';
+
+    // Get subjects of selected class
+    const subjects = staticData.subjects[classId];
+
+    // Set heading
+    const className = staticData.classes.find(c => c.id === classId)?.name;
+    title.innerHTML = `${className} Subjects`;
+
+    // Loop through subjects
+    subjects.forEach(subject => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+            <i class="fa-solid fa-book card-icon"></i>
+            <h3 class="card-title">${subject}</h3>
+        `;
+
+        // Click action (for next step later)
+        card.onclick = () => this.navigate('resources');
+
+        container.appendChild(card);
+    });
+},
 
     // ==========================================
     // 7. NAVIGATION & ROUTING
@@ -350,6 +387,9 @@ window.app = {
     // Navigate to different "pages/views" within the SPA
     navigate: function(viewId, params = {}) {
         this.showView(viewId, true);
+        if (viewId === 'subjects' && params.classId) {
+    this.renderSubjects(params.classId);
+}
         
         // FUTURE routing connections for Subjects and Resources:
         // if (viewId === 'subjects' && params.classId) this.renderSubjects(params.classId);
