@@ -47,7 +47,30 @@ const staticData = {
         c10: ["Science", "Mathematics", "Social Studies"],
         c11: ["Physics", "Chemistry", "Mathematics", "Biology"],
         c12: ["Physics", "Chemistry", "Mathematics", "Biology"]
-    }
+    },
+    resources: [
+    // ================= CLASS 9 =================
+    { classId: "c9", subject: "Science", title: "Class 9 Science Full Book", url: "https://ncert.nic.in/textbook/pdf/iesc1dd.zip" },
+    { classId: "c9", subject: "Mathematics", title: "Class 9 Maths Full Book", url: "https://ncert.nic.in/textbook/pdf/iemh1dd.zip" },
+    { classId: "c9", subject: "Social Studies", title: "Class 9 SST Full Book", url: "PASTE_LINK_9_SST" },
+
+    // ================= CLASS 10 =================
+    { classId: "c10", subject: "Science", title: "Class 10 Science Full Book", url: "https://ncert.nic.in/textbook/pdf/jesc1dd.zip" },
+    { classId: "c10", subject: "Mathematics", title: "Class 10 Maths Full Book", url: "https://ncert.nic.in/textbook/pdf/jemh1dd.zip" },
+    { classId: "c10", subject: "Social Studies", title: "Class 10 SST Full Book", url: "PASTE_LINK_10_SST" },
+
+    // ================= CLASS 11 =================
+    { classId: "c11", subject: "Physics", title: "Class 11 Physics Full Book", url: "https://ncert.nic.in/textbook/pdf/keph1dd.zip" },
+    { classId: "c11", subject: "Chemistry", title: "Class 11 Chemistry Full Book", url: "https://ncert.nic.in/textbook/pdf/kech1dd.zip" },
+    { classId: "c11", subject: "Mathematics", title: "Class 11 Maths Full Book", url: "https://ncert.nic.in/textbook/pdf/kemh1dd.zip" },
+    { classId: "c11", subject: "Biology", title: "Class 11 Biology Full Book", url: "https://ncert.nic.in/textbook/pdf/kebo1dd.zip" },
+
+    // ================= CLASS 12 =================
+    { classId: "c12", subject: "Physics", title: "Class 12 Physics Full Book", url: "https://ncert.nic.in/textbook/pdf/leph1dd.zip" },
+    { classId: "c12", subject: "Chemistry", title: "Class 12 Chemistry Full Book", url: "https://ncert.nic.in/textbook/pdf/lech1dd.zip" },
+    { classId: "c12", subject: "Mathematics", title: "Class 12 Maths Full Book", url: "https://ncert.nic.in/textbook/pdf/lemh1dd.zip" },
+    { classId: "c12", subject: "Biology", title: "Class 12 Biology Full Book", url: "https://ncert.nic.in/textbook/pdf/lebo1dd.zip" }
+]
 };
 
 // ==========================================
@@ -350,8 +373,7 @@ window.app = {
     renderSubjects: function(classId) {
     const container = document.getElementById('subjects-container');
     const title = document.getElementById('subjects-title');
-
-    if (!container) return;
+     if (!container) return;
 
     // Clear previous data
     container.innerHTML = '';
@@ -374,7 +396,41 @@ window.app = {
         `;
 
         // Click action (for next step later)
-        card.onclick = () => this.navigate('resources');
+        card.onclick = () => this.navigate('resources', {
+    classId: classId,
+    subject: subject
+});
+
+        container.appendChild(card);
+    });
+},
+renderResources: function(classId, subject) {
+    const container = document.getElementById('resources-container');
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Filter PDFs
+    const filtered = staticData.resources.filter(r =>
+        r.classId === classId && r.subject === subject
+    );
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<div class="empty-state">No PDF found</div>`;
+        return;
+    }
+
+    filtered.forEach(res => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+            <h3 class="card-title">${res.title}</h3>
+            <a href="${res.url}" target="_blank" class="btn btn-primary">
+                Download PDF
+            </a>
+        `;
 
         container.appendChild(card);
     });
@@ -389,6 +445,9 @@ window.app = {
         this.showView(viewId, true);
         if (viewId === 'subjects' && params.classId) {
     this.renderSubjects(params.classId);
+}
+if (viewId === 'resources' && params.classId && params.subject) {
+    this.renderResources(params.classId, params.subject);
 }
         
         // FUTURE routing connections for Subjects and Resources:
